@@ -1250,6 +1250,22 @@ app.get('/room/:roomId', (c) => {
                 }
             });
 
+            // Expose functions to global scope for onclick handlers
+            window.switchTab = switchTab;
+            window.addBoardItem = addBoardItem;
+            window.uploadImage = uploadImage;
+            window.setDrawColor = setDrawColor;
+            window.setDrawWidth = setDrawWidth;
+            window.clearCanvas = clearCanvas;
+            window.saveDrawing = saveDrawing;
+            window.deleteItem = deleteItem;
+            window.sendMessage = sendMessage;
+            window.copyRoomLink = copyRoomLink;
+            window.verifyPassword = verifyPassword;
+            window.showDeleteModal = showDeleteModal;
+            window.hideDeleteModal = hideDeleteModal;
+            window.deleteRoom = deleteRoom;
+
             // Cleanup on page unload
             window.addEventListener('beforeunload', () => {
                 if (pollInterval) {
