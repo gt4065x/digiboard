@@ -524,8 +524,12 @@ app.get('/room/:roomId', (c) => {
           }
           .board-item { word-wrap: break-word; overflow-wrap: break-word; }
           .url-link { word-break: break-all; }
-          .modal { display: none; }
-          .modal.active { display: flex; }
+          .modal { 
+            display: none !important; 
+          }
+          .modal.active { 
+            display: flex !important; 
+          }
           .tabs button.active { background-color: #3b82f6; color: white; }
           
           /* Canvas styles */
