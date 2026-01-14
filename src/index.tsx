@@ -720,6 +720,11 @@ app.get('/room/:roomId', (c) => {
 
         <script src="https://cdn.jsdelivr.net/npm/axios@1.6.0/dist/axios.min.js"></script>
         <script>
+            window.ROOM_ID = '${roomId}';
+        </script>
+        <script src="/static/room.js"></script>
+        <script type="text/deleted">
+            /* Moved to /static/room.js */
             const roomId = '\${roomId}';
             let pollInterval;
             let hasPassword = false;
@@ -1273,8 +1278,8 @@ app.get('/room/:roomId', (c) => {
                 }
             });
 
-            // Start app
-            init();
+            // Start app - NOW IN /static/room.js
+            // init();
         </script>
     </body>
     </html>
