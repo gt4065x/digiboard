@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0E1116">
+  <title>셋고 타이머</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+
+  <header class="topbar">
+    <div class="brand">셋고<span>타이머</span></div>
+    <button class="icon-btn" id="btn-settings" aria-label="설정">
+      <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></svg>
+    </button>
+  </header>
+
+  <main>
+    <!-- 인터벌 -->
+    <section class="view" id="view-interval">
+      <div class="stage" id="iv-stage" data-phase="idle">
+        <div class="stage-top">
+          <span id="iv-name">운동</span>
+          <span>남은 시간 <b id="iv-total">00:00</b></span>
+        </div>
+        <div class="stage-label" id="iv-label">준비</div>
+        <div class="stage-time" id="iv-time">00:00</div>
+        <div class="stage-next" id="iv-next"></div>
+      </div>
+      <div class="deck">
+        <div class="counters">
+          <div class="counter"><b id="iv-round">1/1</b><span>라운드</span></div>
+          <button class="main-btn" id="iv-toggle" aria-label="시작">
+            <svg class="ring" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45"/><circle id="iv-ring" cx="50" cy="50" r="45"/></svg>
+            <span id="iv-toggle-icon"></span>
+          </button>
+          <div class="counter"><b id="iv-cycle">1/1</b><span>사이클</span></div>
+        </div>
+        <div class="mini-row">
+          <button class="mini" id="iv-prev">◀ 이전</button>
+          <button class="mini" id="iv-reset">처음부터</button>
+          <button class="mini" id="iv-skip">다음 ▶</button>
+        </div>
+        <button class="pick" id="iv-pick">
+          <span><b id="iv-pick-name"></b><small id="iv-pick-sum"></small></span>
+          <span class="chev">운동 바꾸기 ›</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- 세트 카운터 -->
+    <section class="view" id="view-sets" hidden>
+      <div class="stage" id="st-stage" data-phase="idle">
+        <div class="stage-top">
+          <span>세트 카운터</span>
+          <span>전체 <b id="st-total">00:00</b></span>
+        </div>
+        <div class="stage-label" id="st-label">시작 전</div>
+        <div class="stage-time" id="st-time">00:00</div>
+        <div class="stage-next" id="st-next"></div>
+      </div>
+      <div class="deck">
+        <div class="dots" id="st-dots"></div>
+        <button class="wide-btn" id="st-main">운동 시작</button>
+        <div class="mini-row" id="st-rest-row" hidden>
+          <button class="mini" id="st-minus">−10초</button>
+          <button class="mini" id="st-skip">건너뛰기</button>
+          <button class="mini" id="st-plus">+10초</button>
+        </div>
+        <div class="fields">
+          <div class="field">
+            <div><b>목표 세트</b></div>
+            <div class="stepper"><button data-st="target" data-d="-1">−</button><output id="st-target">5</output><button data-st="target" data-d="1">+</button></div>
+          </div>
+          <div class="field">
+            <div><b>세트 사이 휴식</b></div>
+            <div class="stepper"><button data-st="rest" data-d="-10">−</button><output id="st-rest">01:30</output><button data-st="rest" data-d="10">+</button></div>
+          </div>
+        </div>
+        <button class="mini solo" id="st-reset">처음부터 다시</button>
+      </div>
+    </section>
+
+    <!-- 스톱워치 -->
+    <section class="view" id="view-stopwatch" hidden>
+      <div class="stage" id="sw-stage" data-phase="idle">
+        <div class="stage-top"><span>스톱워치</span><span id="sw-lapcount"></span></div>
+        <div class="stage-label">경과 시간</div>
+        <div class="stage-time" id="sw-time">00:00<small>.00</small></div>
+        <div class="stage-next"></div>
+      </div>
+      <div class="deck">
+        <div class="two">
+          <button class="wide-btn ghost" id="sw-lap">기록</button>
+          <button class="wide-btn" id="sw-toggle">시작</button>
+        </div>
+        <ol class="laps" id="sw-laps"></ol>
+      </div>
+    </section>
+
+    <!-- 기록 -->
+    <section class="view scroll" id="view-history" hidden>
+      <div class="stats">
+        <div><b id="hs-week">0</b><span>이번 주 운동</span></div>
+        <div><b id="hs-time">0분</b><span>이번 주 시간</span></div>
+        <div><b id="hs-all">0</b><span>전체 횟수</span></div>
+      </div>
+      <ul class="list" id="hs-list"></ul>
+      <button class="mini solo" id="hs-clear">기록 모두 지우기</button>
+    </section>
+  </main>
+
+  <nav class="tabs">
+    <button data-tab="interval" class="on">인터벌</button>
+    <button data-tab="sets">세트</button>
+    <button data-tab="stopwatch">스톱워치</button>
+    <button data-tab="history">기록</button>
+  </nav>
+</div>
+
+<!-- 운동 목록 -->
+<dialog id="dlg-workouts">
+  <header class="sheet-head">
+    <button class="text-btn" data-close>닫기</button>
+    <h2>내 운동</h2>
+    <span class="spacer"></span>
+  </header>
+  <div class="sheet-body">
+    <ul class="list" id="wk-list"></ul>
+    <button class="wide-btn ghost" id="wk-add">+ 새 운동 만들기</button>
+  </div>
+</dialog>
+
+<!-- 운동 편집 -->
+<dialog id="dlg-editor">
+  <header class="sheet-head">
+    <button class="text-btn" data-close>취소</button>
+    <h2 id="ed-title">새 운동</h2>
+    <button class="text-btn strong" id="ed-save">저장</button>
+  </header>
+  <div class="sheet-body">
+    <input class="name-input" id="ed-name" maxlength="30" placeholder="운동 이름 (예: 하체 인터벌)">
+    <div class="fields" id="ed-fields"></div>
+    <p class="sum" id="ed-sum"></p>
+  </div>
+</dialog>
+
+<!-- 설정 -->
+<dialog id="dlg-settings">
+  <header class="sheet-head">
+    <span class="spacer"></span>
+    <h2>설정</h2>
+    <button class="text-btn strong" data-close>완료</button>
+  </header>
+  <div class="sheet-body">
+    <div class="fields">
+      <label class="field"><div><b>알림음</b><small>구간이 바뀔 때와 3·2·1초에 울려요</small></div><input type="checkbox" class="switch" data-set="sound"></label>
+      <label class="field"><div><b>소리 종류</b></div>
+        <select data-set="soundType"><option value="beep">비프</option><option value="bell">벨</option><option value="wood">우드블록</option></select></label>
+      <label class="field"><div><b>음량</b></div><input type="range" min="0" max="1" step="0.05" data-set="volume"></label>
+      <div class="field"><div><b>소리 들어보기</b></div><button class="mini" id="set-test">재생</button></div>
+      <label class="field"><div><b>음성 안내</b><small>"운동", "휴식"을 말로 알려줘요</small></div><input type="checkbox" class="switch" data-set="voice"></label>
+      <label class="field"><div><b>진동</b></div><input type="checkbox" class="switch" data-set="vibrate"></label>
+      <label class="field"><div><b>화면 깜빡임</b><small>구간이 바뀔 때 화면이 번쩍여요</small></div><input type="checkbox" class="switch" data-set="flash"></label>
+      <label class="field"><div><b>화면 켜짐 유지</b><small>운동 중에 화면이 꺼지지 않아요</small></div><input type="checkbox" class="switch" data-set="keepAwake"></label>
+      <label class="field"><div><b>시간 표시</b></div>
+        <select data-set="format"><option value="mmss">분:초 (01:30)</option><option value="sec">초 (90)</option></select></label>
+    </div>
+  </div>
+</dialog>
+
+<div id="flash"></div>
+<script type="module" src="app.js"></script>
+</body>
+</html>
