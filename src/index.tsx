@@ -15,6 +15,9 @@ app.use('/api/*', cors())
 // Serve static files
 app.use('/static/*', serveStatic({ root: './public' }))
 
+// 셋고 타이머 (운동 타이머 앱) 바로가기
+app.get('/timer', (c) => c.redirect('/static/timer/index.html'))
+
 // ===== API Routes =====
 
 // Create a new room
